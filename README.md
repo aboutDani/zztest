@@ -1,50 +1,59 @@
 # ISU-Installation-Device-Report
 
-Report ABAP IS-U per estrazione e visualizzazione integrata di dati relativi a:
+> ABAP IS-U extraction tool for integrated data visualization.
 
-- **Impianto** (EANL)
-- **Contratto** (EVER)
-- **Conto contrattuale** (FKKVKP / VKONT)
-- **Business Partner** (BUT000 + indirizzo da BUT020/ADRC)
-- **Apparecchiatura / Contatore** (EASTL → EGERH → EQUI)
+---
 
-Con visualizzazione in griglia SALV ottimizzata (colonne ridimensionabili automaticamente).
+### [0] OVERVIEW
+Report ABAP per estrazione e visualizzazione integrata di:
+- **Impianto**           : EANL
+- **Contratto**           : EVER
+- **Conto contrattuale**  : FKKVKP / VKONT
+- **Business Partner**    : BUT000 + ADRC (via/civico)
+- **Apparecchiatura**     : EASTL -> EGERH -> EQUI
 
-### Funzionalità principali
+Display: Grid SALV (auto-optimized column width).
 
-- Selezione multipla su numero impianto (`ANLAGE`)
-- Recupero dati anagrafici BP (nome, cognome, indirizzo completo via + civico)
-- Dati contratto e conto contrattuale
-- Tipo impianto con testo descrittivo (da TE439T)
-- Informazioni apparecchiatura (EQUNR + numero seriale SERNR)
-- Filtro base su apparecchiatura attualmente installata (BISZEITSCH = '99991231')
-- Output in ALV SALV con intestazioni personalizzate e ottimizzazione larghezza colonne
+---
 
-### Tabelle utilizzate
+### [1] FEATURES
+- Multi-selection su `ANLAGE`.
+- Master data BP (Name, Surname, Full Address).
+- Mapping `TE439T` per descrizioni tipi impianto.
+- Filter: `BISZEITSCH = '99991231'` (Current Install).
+- ALV SALV output con header custom.
 
-| Tabella   | Descrizione principale                  |
-|-----------|-----------------------------------------|
-| EANL      | Installazioni / Impianti                |
-| EVER      | Contratti                               |
-| FKKVKP    | Dati partner per conto contrattuale     |
-| BUT000    | Business Partner header                 |
-| BUT020    | Collegamento BP → indirizzo             |
-| ADRC      | Indirizzi (via, civico, città, CAP)     |
-| EASTL     | Installazione dispositivo in impianto   |
-| EGERH     | Storico master dispositivo              |
-| EQUI      | Equipment (contatore / apparecchiatura) |
-| TE439T    | Testi tipo impianto                     |
+---
 
-### Requisiti
+### [2] DATA_STRUCTURE
 
-- Sistema SAP IS-U / EDM attivo
-- Autorizzazioni su tabelle sopra indicate
-- ABAP 7.40+ (per inline data, host variables @, concatenazione &&)
+| Tabella | Descrizione |
+| :--- | :--- |
+| EANL | Installazioni / Impianti |
+| EVER | Contratti |
+| FKKVKP | Dati partner / VKONT |
+| BUT000 | Business Partner Header |
+| BUT020 | BP -> Address Link |
+| ADRC | Addresses (Street/City) |
+| EASTL | Device Installation |
+| EGERH | Device Master History |
+| EQUI | Equipment (Serial NR) |
+| TE439T | Plant Type Texts |
 
-### Utilizzo
+---
 
-1. Inserire uno o più numeri impianto nel range di selezione
-2. Eseguire (F8)
-3. Visualizzazione griglia SALV con ottimizzazione colonne
+### [3] REQUIREMENTS
+- ENVIRONMENT : SAP IS-U / EDM Active
+- AUTH        : Table access (EANL, EVER, BUT000, etc.)
+- STACK       : ABAP 7.40+ (Inline data, @HostVars, &&)
 
-Creato per scopi di analisi e debugging IS-U – non è un programma di produzione certificato.
+---
+
+### [4] USAGE
+1. Input `ANLAGE` range.
+2. Execute `(F8)`.
+3. Review optimized SALV grid.
+
+---
+
+[!] DISCLAIMER: Tool creato per analisi e debugging. Not a production-ready program.
